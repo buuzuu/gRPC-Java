@@ -1,0 +1,28 @@
+syntax ="proto3";
+
+package greeting;
+
+option java_package ="com.proto.greeting";
+option java_multiple_files = true;
+
+import "greeting/sqrt.proto";
+
+message GreetingRequest{
+  string firstName = 1;
+}
+
+message GreetingResponse {
+  string result = 1;
+}
+service GreetingService {
+  rpc greet(GreetingRequest) returns (GreetingResponse);
+  rpc greetManyTimes(GreetingRequest) returns ( stream GreetingResponse);
+  rpc longGreet(stream GreetingRequest) returns (  GreetingResponse);
+  rpc greetEveryone(stream GreetingRequest) returns ( stream GreetingResponse);
+
+  //Returns a Status.INVALID_ARGUMENT if the SqrtRequest.number is negative.
+  rpc squareRoot(SqrtRequest) returns (SqrtResponse);
+
+  //Deadline
+  rpc greetWithDeadline(GreetingRequest) returns (GreetingResponse);
+}
